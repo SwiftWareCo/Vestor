@@ -1,37 +1,170 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Vestor (Investor Matching Bot)
+
+Vestor is a customer-facing SaaS that helps users match investors to clients/companies using AI-powered search + structured filters.
+
+Users can upload their own investor lists first (private to their workspace), then optionally search a curated public investor database later. The app turns investor profiles (PDFs, websites, notes, emails, etc.) into searchable records and recommends the best-fit investors for a specific client based on sector, stage, geography, ticket size, thesis, and other constraints.
+
+## What it does
+
+- **Investor intake**: add investors manually or by uploading docs/links.
+- **Document processing**: extract text, chunk, embed, and store for retrieval.
+- **Investor search**: hybrid search (keywords + embeddings) with metadata filters.
+- **AI matching**: rank and explain _why_ each investor is a fit (and why not).
+- **Client profiles**: store client/company details and reuse them for matching.
+- **Shortlists**: save, tag, and export recommended investors.
+
+## Tech Stack
+
+- **Frontend**: Next.js 16, React 19, TypeScript
+- **UI**: Tailwind CSS, shadcn/ui components
+- **Database**: PostgreSQL with Neon
+- **ORM**: Drizzle ORM
+- **Authentication**: Neon Auth (built on Better Auth)
+- **AI**: OpenAI embeddings and GPT for matching logic
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18+
+- pnpm package manager
+- Neon database account
+- OpenAI API key (for embeddings and matching)
+
+### 1. Clone and Install
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <repository-url>
+cd vestor
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Environment Setup
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Create a `.env.local` file in the project root:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```env
+# Database
+DATABASE_URL="postgresql://[user]:[password]@[host]/[database]?sslmode=require"
 
-## Learn More
+# Neon Auth
+NEON_AUTH_BASE_URL="https://ep-xxx.neonauth.us-east-1.aws.neon.tech/neondb/auth"
 
-To learn more about Next.js, take a look at the following resources:
+# OpenAI (for embeddings and AI matching)
+OPENAI_API_KEY="sk-..."
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Next.js
+NEXTAUTH_URL="http://localhost:3000"
+NEXTAUTH_SECRET="your-secret-key"
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 3. Database Setup
 
-## Deploy on Vercel
+```bash
+# Generate database migrations
+pnpm db:generate
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Push schema to database
+pnpm db:push
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# Vestor
+# (Optional) Open Drizzle Studio to manage database
+pnpm db:studio
+```
+
+### 4. Run Development Server
+
+```bash
+pnpm dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) to see the application.
+
+## Project Structure
+
+```
+vestor/
+├── app/                    # Next.js app router
+│   ├── auth/              # Authentication pages
+│   ├── dashboard/         # Main dashboard
+│   ├── investors/         # Investor management
+│   ├── clients/           # Client management
+│   └── matching/          # AI matching interface
+├── lib/
+│   ├── auth/              # Auth client/server setup
+│   ├── database/          # Database schemas and config
+│   │   ├── tables/        # Individual table schemas
+│   │   └── index.ts       # Schema exports
+│   └── utils.ts           # Shared utilities
+├── components/            # Reusable UI components
+├── drizzle/              # Database migrations
+└── proxy.ts              # Auth middleware
+```
+
+## Database Schema
+
+The application uses Drizzle ORM with a modular schema structure:
+
+- **users**: User accounts and authentication
+- **investors**: Investor profiles and metadata
+- **clients**: Client/company information
+- **documents**: Uploaded investor documents
+- **matches**: AI-generated investor-client matches
+- **shortlists**: Saved investor recommendations
+
+## Authentication
+
+Uses Neon Auth for managed authentication:
+
+- Email/password authentication
+- Google OAuth integration
+- Email OTP for passwordless login
+- Session management handled automatically
+
+## Development
+
+### Available Scripts
+
+```bash
+pnpm dev          # Start development server
+pnpm build        # Build for production
+pnpm start        # Start production server
+pnpm lint:eslint  # Run ESLint
+pnpm lint:types   # Run TypeScript checks
+pnpm db:studio    # Open Drizzle Studio
+pnpm db:push      # Push schema changes
+```
+
+### Adding New Features
+
+1. Create schema in `lib/database/tables/feature.schema.ts`
+2. Export in `lib/database/index.ts`
+3. Run `pnpm db:push` to update database
+4. Build UI components in `components/`
+5. Add routes in `app/`
+
+## Deployment
+
+### Vercel (Recommended)
+
+1. Connect your GitHub repository to Vercel
+2. Add environment variables in Vercel dashboard
+3. Deploy automatically on push to main branch
+
+### Manual Deployment
+
+```bash
+pnpm build
+pnpm start
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Run tests and linting
+5. Submit a pull request
+
+## License
+
+MIT License - see LICENSE file for details.

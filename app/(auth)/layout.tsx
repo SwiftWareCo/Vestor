@@ -2,8 +2,7 @@ import { authClient } from '@/lib/auth/client';
 import { NeonAuthUIProvider } from '@neondatabase/auth/react';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
-import { Toaster } from 'sonner';
-import './globals.css';
+import '../globals.css';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -16,16 +15,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Vestor - AI-Powered Investor Matching',
-  description:
-    'Match investors to clients using AI-powered search and structured filters',
-  icons: {
-    icon: '/favicon.svg',
-    apple: '/favicon.svg',
-  },
+  title: 'Vestor - Sign In',
+  description: 'Sign in to Vestor to start matching investors with clients',
 };
 
-export default function RootLayout({
+export default function AuthLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -37,14 +31,13 @@ export default function RootLayout({
       >
         <NeonAuthUIProvider
           authClient={authClient}
-          redirectTo='/auth/sign-in'
+          redirectTo='/'
           emailOTP={true}
           social={{
             providers: ['google'],
           }}
         >
           {children}
-          <Toaster />
         </NeonAuthUIProvider>
       </body>
     </html>
