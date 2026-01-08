@@ -10,7 +10,7 @@ interface UserButtonNavProps {
 export function UserButtonNav({ className }: UserButtonNavProps) {
   return (
     <div className={cn('flex items-center', className)}>
-      <UserButton size="icon" className='cursor-pointer ' />
+      <UserButton size='icon' className='cursor-pointer' />
     </div>
   );
 }

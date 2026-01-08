@@ -3,10 +3,10 @@ import { z } from 'zod';
 
 /**
  * Posts table
- * 
+ *
  * authorId references neon_auth.users_sync(id)
  * The foreign key constraint should be added via migration:
- * ALTER TABLE posts ADD CONSTRAINT posts_author_id_fkey 
+ * ALTER TABLE posts ADD CONSTRAINT posts_author_id_fkey
  * FOREIGN KEY (author_id) REFERENCES neon_auth.users_sync(id) ON DELETE CASCADE;
  */
 export const posts = pgTable('posts', {

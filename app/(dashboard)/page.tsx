@@ -5,7 +5,7 @@ import { CreatePostDialog } from '@/components/posts/CreatePostDialog';
 
 export default async function DashboardPage() {
   const { session, user } = await neonAuth();
-  
+
   // Fetch all posts
   const allPosts = await db.select().from(posts);
 
@@ -31,7 +31,9 @@ export default async function DashboardPage() {
 
         {allPosts.length === 0 ? (
           <div className='rounded-lg border border-dashed p-8 text-center'>
-            <p className='text-muted-foreground'>No posts yet. Create your first post to get started!</p>
+            <p className='text-muted-foreground'>
+              No posts yet. Create your first post to get started!
+            </p>
           </div>
         ) : (
           <div className='grid gap-4'>
@@ -43,7 +45,9 @@ export default async function DashboardPage() {
                 <div className='space-y-2'>
                   <h3 className='text-xl font-semibold'>{post.title}</h3>
                   {post.content && (
-                    <p className='text-muted-foreground line-clamp-3'>{post.content}</p>
+                    <p className='text-muted-foreground line-clamp-3'>
+                      {post.content}
+                    </p>
                   )}
                   <div className='flex items-center gap-4 text-sm text-muted-foreground'>
                     {post.createdAt && (
@@ -51,9 +55,7 @@ export default async function DashboardPage() {
                         Created: {new Date(post.createdAt).toLocaleDateString()}
                       </span>
                     )}
-                    {post.authorId && (
-                      <span>Author ID: {post.authorId}</span>
-                    )}
+                    {post.authorId && <span>Author ID: {post.authorId}</span>}
                   </div>
                 </div>
               </div>

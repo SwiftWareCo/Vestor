@@ -8,7 +8,6 @@ export default neonAuthMiddleware({
 export const config = {
   matcher: [
     // Protect dashboard routes except auth pages and static assets
-    '/dashboard/:path*',
     '/account/:path*',
     '/',
   ],
