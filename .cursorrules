@@ -1,0 +1,32 @@
+# Workspace Rules
+
+## Authentication
+
+Access user data on server and client
+
+Server Components:
+
+To use Neon Auth in Next.js server components, import the authServer created in lib/auth/server.ts, and use different API methods it provides.
+For quick access to session and user details, you can directly use neonAuth() utility without needing to create authServer.
+
+Client Components:
+
+To use the Neon Auth in Next.js client components, import the authClient created in lib/auth/client.ts, and use different API methods it provides.
+
+## Code Style Guide
+
+- Always use shadcn components for UI
+- Always use Tailwind CSS for styling
+- after changes run pnpm run lint:types and pnpm run lint:eslint to ensure changes are correct
+
+## Forms
+
+- Always use react-hook-form for form handling
+- Use the Form component from @/components/ui/form
+- Use drizzle-zod schemas from schema files for form validation
+- Import zodResolver from @hookform/resolvers
+- Form schemas should be defined in the schema file using createInsertSchema from drizzle-zod
+
+## Types
+
+- for typing the main source of truth would be schema files using drizzle-zod
