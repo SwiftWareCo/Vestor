@@ -5,7 +5,10 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
 import { createPost } from '@/lib/actions/posts.actions';
-import { createPostSchema, type CreatePostInput } from '@/lib/database/tables/posts.schema';
+import {
+  createPostSchema,
+  type CreatePostInput,
+} from '@/lib/database/tables/posts.schema';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -45,9 +48,7 @@ export function CreatePostDialog() {
       form.reset();
       setOpen(false);
     } catch (err) {
-      toast.error(
-        err instanceof Error ? err.message : 'Failed to create post'
-      );
+      toast.error(err instanceof Error ? err.message : 'Failed to create post');
     }
   }
 

@@ -1,5 +1,6 @@
 import { db } from '@/lib/db';
 import { posts } from '@/lib/database';
+import { eq } from 'drizzle-orm';
 
 /**
  * Fetch all posts
@@ -12,6 +13,6 @@ export async function getAllPosts() {
  * Fetch a post by ID
  */
 export async function getPostById(postId: number) {
-  const allPosts = await db.select().from(posts);
-  return allPosts.find((post) => post.id === postId);
+  const result = await db.select().from(posts).where(eq(posts.id, postId));
+  return result[0];
 }
