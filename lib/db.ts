@@ -1,10 +1,13 @@
-// src/db.ts
 import { drizzle } from 'drizzle-orm/neon-http';
 import { neon } from '@neondatabase/serverless';
-import { config } from 'dotenv';
 import * as schema from './database';
+import { getDatabaseUrl } from './env';
 
-config({ path: '.env' }); // or .env.local
-
-const sql = neon(process.env.DATABASE_URL!);
+/**
+ * Database client for Neon Postgres
+ * Uses HTTP driver for Vercel serverless compatibility
+ *
+ * Import as: import { db } from '@/lib/db'
+ */
+const sql = neon(getDatabaseUrl());
 export const db = drizzle({ client: sql, schema });

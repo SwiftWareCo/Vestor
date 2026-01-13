@@ -4,7 +4,7 @@ import { posts } from '@/lib/database';
 import { CreatePostDialog } from '@/components/posts/CreatePostDialog';
 
 export default async function DashboardPage() {
-  const { session, user } = await neonAuth();
+  const { user } = await neonAuth();
 
   // Fetch all posts
   const allPosts = await db.select().from(posts);
