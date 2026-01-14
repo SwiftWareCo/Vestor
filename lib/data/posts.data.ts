@@ -1,3 +1,4 @@
+import 'server-only';
 import { db } from '@/lib/db';
 import { posts } from '@/lib/database';
 import { eq } from 'drizzle-orm';

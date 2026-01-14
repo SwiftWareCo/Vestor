@@ -30,3 +30,13 @@ To use the Neon Auth in Next.js client components, import the authClient created
 ## Types
 
 - for typing the main source of truth would be schema files using drizzle-zod
+
+## Data Access
+
+- for data access always use data files in lib/data
+- always use server-only for data access
+
+# Mutations
+
+- for mutations always use actions files in lib/actions
+- always use 'use server' directive for actions files
